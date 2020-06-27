@@ -1,5 +1,4 @@
-//import liraries
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -11,40 +10,35 @@ import {
 
 const {width, height} = Dimensions.get('screen');
 
-// create a component
-class ComicCard extends Component {
-  render() {
-    const {comic} = this.props;
-    return (
-      <TouchableOpacity style={styles.container}>
+const ComicCard = ({comic}) => {
+  return (
+    <TouchableOpacity style={styles.container}>
+      <View>
+        <Image
+          resizeMode="stretch"
+          style={styles.image}
+          source={{
+            uri: `${comic.thumbnail?.path}.${comic.thumbnail?.extension}`,
+          }}
+        />
+      </View>
+      <View style={styles.textContainer}>
         <View>
-          <Image
-            resizeMode="stretch"
-            style={styles.image}
-            source={{
-              uri: `${comic.thumbnail?.path}.${comic.thumbnail?.extension}`,
-            }}
-          />
+          <Text style={styles.title}>{comic.title}</Text>
         </View>
-        <View style={styles.textContainer}>
-          <View>
-            <Text style={styles.title}>{comic.title}</Text>
-          </View>
-          <View>
-            <Text
-              style={styles.description}
-              numberOfLines={5}
-              ellipsizeMode={'tail'}>
-              {comic.description}
-            </Text>
-          </View>
+        <View>
+          <Text
+            style={styles.description}
+            numberOfLines={5}
+            ellipsizeMode={'tail'}>
+            {comic.description}
+          </Text>
         </View>
-      </TouchableOpacity>
-    );
-  }
-}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     width,

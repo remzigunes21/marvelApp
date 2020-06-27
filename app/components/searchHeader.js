@@ -1,49 +1,41 @@
-//import liraries
-import React, {Component} from 'react';
+import React from 'react';
 import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-class SearchHeader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
+const SearchHeader = props => {
+  const [value, setValue] = React.useState('');
 
-  cancelSearch = () => {
-    this.setState({value: ''}, () => {
-      this.props.cancelSearch();
-    });
+  // eslint-disable-next-line no-undef
+  cancelSearchs = () => {
+    setValue('');
   };
-  render() {
-    const {onSubmit} = this.props;
-    return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          returnKeyType="done"
-          value={this.state.value}
-          onChangeText={text => this.setState({value: text})}
-          placeholder="Search"
-          color="textDark"
-          onSubmitEditing={() => {
-            onSubmit(this.state.value);
-          }}
-        />
 
-        {this.state.value !== '' ? (
-          <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={this.cancelSearch}>
-            <Icon name="trash" size={22} color="red" />
-          </TouchableOpacity>
-        ) : null}
-      </View>
-    );
-  }
-}
+  const {onSubmit} = props;
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        value={value}
+        onChangeText={text => setValue(text)}
+        placeholder="Search"
+        color="textDark"
+        onSubmitEditing={() => {
+          onSubmit(value);
+        }}
+        returnKeyType="google"
+      />
+
+      {value !== '' ? (
+        // eslint-disable-next-line no-undef
+        <TouchableOpacity style={styles.deleteButton} onPress={cancelSearchs}>
+          <Icon name="trash" size={22} color="red" />
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

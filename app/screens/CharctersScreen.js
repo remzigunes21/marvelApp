@@ -78,6 +78,7 @@ class CharcterSearchScreen extends Component {
         )}
         keyExtractor={item => item.id}
         ListHeaderComponent={this.renderHeader}
+        style={{margin: 5}}
       />
     );
   };

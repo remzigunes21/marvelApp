@@ -1,15 +1,24 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import CharcterSearchScreen from './app/screens/CharctersScreen';
 import DetailScreen from './app/screens/DetailScreen';
-
-const TabNavigation = createBottomTabNavigator();
+import Contact from './app/screens/Contact';
+import About from './app/screens/About';
 
 const SearchStack = createStackNavigator();
+
+const DraverStack = createStackNavigator();
+
+const Drawer = createDrawerNavigator();
 
 function SearchStackScreen() {
   return (
@@ -25,30 +34,56 @@ function SearchStackScreen() {
         name="Detail"
         component={DetailScreen}
         options={() => ({
-          headerShown: false,
-          // title: route.params?.title || "",
-          // headerStyle: {
-          //   backgroundColor: theme.colors.softRed,
-          //   shadowColor: "transparent"
-          // },
-          // headerLeft: () => (
-          //   <Button px={10} height="100%" onPress={() => navigation.navigate("Search")}>
-          //     <Left color={theme.colors.textDark} />
-          //   </Button>
-          // ),
-          // headerRight: () => (
-          //   <Button px={10} height="100%" onPress={() => navigation.navigate("Search")}>
-          //     <More color={theme.colors.textDark} />
-          //   </Button>
-          // )
+          headerShown: true,
         })}
       />
     </SearchStack.Navigator>
   );
 }
 
+function ContactStackScreen() {
+  return (
+    <DraverStack.Navigator>
+      <DraverStack.Screen
+        name="Contact"
+        component={Contact}
+        options={() => ({
+          headerShown: true,
+        })}
+      />
+    </DraverStack.Navigator>
+  );
+}
+
+function AboutStackScreen() {
+  return (
+    <DraverStack.Navigator>
+      <DraverStack.Screen
+        name="About"
+        component={About}
+        options={() => ({
+          headerShown: true,
+        })}
+      />
+    </DraverStack.Navigator>
+  );
+}
+function MyDrawer() {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={SearchStackScreen} />
+      <Drawer.Screen name="Contact" component={ContactStackScreen} />
+      <Drawer.Screen name="About" component={AboutStackScreen} />
+    </Drawer.Navigator>
+  );
+}
+
 function App() {
-  return <NavigationContainer>{SearchStackScreen()}</NavigationContainer>;
+  return (
+    <NavigationContainer>
+      <MyDrawer />
+    </NavigationContainer>
+  );
 }
 
 export default App;
